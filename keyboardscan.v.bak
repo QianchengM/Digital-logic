@@ -1,0 +1,7 @@
+module keaboardscan(clk, SWC, SWR);
+input  clk;
+input[3:0] SWC;
+output[3:0] SWR, key;
+reg[3:0] SWR;
+
+always(posedge clk)

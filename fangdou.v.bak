@@ -1,0 +1,16 @@
+module fangdou(in, clk, out);
+input in, clk;
+output out;
+reg[4:0] cnt=0;
+reg cnts=0;
+
+always@(posedge in)
+	
+
+always@(posedge clk)
+	cnt<=cnt+1;
+	if(cnt>=30)
+	begin
+	if()
+		cnt<=0;
+	

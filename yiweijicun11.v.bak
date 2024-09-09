@@ -1,0 +1,51 @@
+module yiweijicun(clr, clk, Rin, Lin, sel, Qout, num);
+input clr, clk;
+input[3:0] Rin, Lin;
+input[1:0] sel;
+output[31:0] Qout;
+output[3:0] num;
+reg[31:0] Qout;
+reg clrt=0, clrtr=0;
+reg[3:0] num=3'bz;
+
+always@(posedge clk)
+begin
+	if(!clr)
+		clrt<=1;
+	if(clrtr==1)
+		clrt<=0;
+end
+
+ 
+ always@(Rin or Lin or clrt)
+ begin
+    if(clrt)
+		 begin
+			Qout<=0;
+			clrtr<=1;
+			num<=0;
+		 end
+	 else
+	  begin		
+		clrtr<=0;
+		case(sel)
+		  2'b00:Qout<=Qout;
+		  2'b11:
+		    begin
+		      Qout<=Qout>>4;
+				Qout[31:28]<=Rin;
+			 end
+		  2'b10:
+		    begin
+			   Qout<=Qout<<4;
+				Qout[3:0]<=Lin;
+			 end
+		endcase
+		num<=num+1;
+		if(num==7)
+		begin
+			num<=0;	
+		end
+	  end
+ end
+endmodule

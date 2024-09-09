@@ -1,0 +1,23 @@
+module baxuanyi(clk,1,m2,s1,s2,ms1,ms2);
+input[3:0] m1,m2,s1,s2,ms1,ms2;
+input en,clk;
+output[3:0] mout;
+reg[3:0] mout;
+reg[2:0] sel=0;
+always@(posedge clk)
+begin
+	sel<=sel+1;
+	if(sel==3'b110) sel<=3'b000;
+	if(!en)
+		case(sel)
+		3'b000:mout=m1;
+		3'b001:mout=m2;
+		3'b010:mout=s1;
+		3'b011:mout=s2;
+		3'b100:mout=ms1;
+		3'b101:mout=ms2;
+		endcase
+	else
+		mout=4'b0000;
+end
+endmodule

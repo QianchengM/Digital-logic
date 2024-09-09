@@ -1,0 +1,35 @@
+module xuliejiance(clk, x, reset, z, curs, nexs);
+input clk, x, reset;
+output z;
+reg z;
+parameter s0=0, s1=1, s2=2, s3=3, s4=4;
+output[2:0] curs, nexs;
+reg[2:0] curs, nexs;
+always@(posedge clk)
+if(!reset)
+	curs<=s0;
+else
+	curs<=nexs;
+	
+always@(curs or x)
+  begin
+    case(curs)
+	 s0:if(x) nexs<=s1; else nexs<=s0;
+	 s1:if(x) nexs<=s2; else nexs<=s1;
+	 s2:if(x) nexs<=s3; else nexs<=s2;
+	 s3:if(x) nexs<=s4; else nexs<=s3;
+	 s4:if(x) nexs<=s0; else nexs<=s4;
+	 default:nexs<=s0;
+	 endcase
+  end
+  
+always(posedge clk)
+  begin
+    case(curs)
+	 s4:z=1'b1;
+	 default:z=1'b0;
+	 endcase
+  end
+endmodule
+	 
+	 

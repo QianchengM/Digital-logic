@@ -1,0 +1,25 @@
+module MSCountMachine(clrn,ldn,enp,ent,clk,din,qout,rco);
+input clrn,ldn,enp,ent,clk;
+input [3:0] din;
+output [3:0] qout;
+output rco;
+reg [3:0] qout;
+always@(posedge clk) 
+  begin
+   if(~clrn)
+     begin
+       qout<=4'b0000;
+     end
+   else if(~ldn)
+     begin 
+       qout<=din;
+     end
+   else if(enp && ent ==1)
+     begin
+       qout<=qout+1;
+     end
+   else 
+	  qout<=qout;
+  end
+  assign rco=(qout==4'b1111 && ent) ? 1 : 0;
+endmodule

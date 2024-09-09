@@ -1,0 +1,20 @@
+module MCountMachine(clrn,enp,ent,srco,qout,rco);
+input clrn,enp,ent,srco;
+output [5:0] qout;
+output rco;
+reg [5:0] qout;
+always@(posedge srco) 
+  begin
+   if(~clrn)
+     begin
+       qout<=7'b000000;
+     end
+   else if(enp && ent ==1)
+     begin
+       qout<=qout+1;
+     end
+   else 
+	  qout<=qout;
+  end
+  assign rco=(qout>=7'b111011 && ent) ? 1 : 0;
+endmodule

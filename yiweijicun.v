@@ -1,0 +1,25 @@
+module yiweijicun(clr, clk, data, Rin, Lin, sel, Qout);
+input clr, clk, Rin, Lin;
+input[1:0] sel;
+input[3:0] data;
+output[3:0] Qout;
+reg[3:0] Qout;
+  always@(posedge clk or negedge clr)
+    if(!clr)
+	   Qout<=4'b0000;
+	 else
+	   case(sel)
+		  2'b00:Qout<=Qout;
+		  2'b01:
+		    begin
+		      Qout<=Qout>>1;
+				Qout[3]<=Rin;
+			 end
+		  2'b10:
+		    begin
+			   Qout<=Qout<<1;
+				Qout[0]<=Lin;
+			 end
+		  2'b11:Qout<=data;
+		endcase
+endmodule
